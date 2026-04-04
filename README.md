@@ -1,3 +1,21 @@
+# Systems & Architecture
+
+pma-voice is composed of the following core systems. Each is documented in detail so the resource can be understood and rebuilt independently.
+
+| System | Description | Documentation |
+|--------|-------------|---------------|
+| **Proximity System** | Spatial voice routing, channel assignment, proximity cycling, spectator mode | [docs/systems/proximity-system.md](docs/systems/proximity-system.md) |
+| **Radio System** | PTT radio channels, transmit sync, access control, disable bitfield | [docs/systems/radio-system.md](docs/systems/radio-system.md) |
+| **Call System** | Phone call channels, always-on bidirectional voice | [docs/systems/call-system.md](docs/systems/call-system.md) |
+| **Submix / Audio Effects System** | Radio/call audio processing chains, volume management | [docs/systems/submix-system.md](docs/systems/submix-system.md) |
+| **UI / HUD System** | Vue 3 NUI overlay, NUI message protocol, build pipeline | [docs/systems/ui-system.md](docs/systems/ui-system.md) |
+| **Mute System** | Staff mute command, timed auto-unmute, local client mute | [docs/systems/mute-system.md](docs/systems/mute-system.md) |
+| **Configuration System** | All ConVars with defaults and descriptions | [docs/systems/configuration.md](docs/systems/configuration.md) |
+| **Shared Utilities** | Logger, type checker, voice modes, RedM polyfills | [docs/systems/shared-utilities.md](docs/systems/shared-utilities.md) |
+| **State Bag System** | Player state synchronization reference | [docs/systems/state-bags.md](docs/systems/state-bags.md) |
+
+---
+
 ## PLEASE NOTE: Currently master branch has some breaking changes
 
 If you previously used `voice_defaultPhoneVolume` you will instead need to use `voice_defaultCallVolume`
