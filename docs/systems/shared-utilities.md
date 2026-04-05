@@ -13,8 +13,10 @@
 ```lua
 Cfg = {}          -- Configuration table, populated with voiceModes
 voiceTarget = 1   -- The mumble voice target index used by the client
-gameVersion = GetGameName()  -- "fivem" or "redm"
+gameVersion = GetGameName()  -- e.g. "fivem", "gta5", or "redm" depending on runtime
 ```
+
+`shouldRegisterFiveMKeyMappings()` (in `shared.lua`) returns true on GTA V clients that should use `RegisterKeyMapping` — it accepts both `fivem` and `gta5`, and is false on RedM and on the FXServer.
 
 On the client, `playerServerId` is also set here:
 ```lua

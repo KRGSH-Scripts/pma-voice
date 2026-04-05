@@ -57,6 +57,10 @@ If none of these are set, the server automatically enables `voice_useNativeAudio
 | `voice_defaultCallVolume` | int | `60` | Default call volume (1–100). New joins only. |
 | `voice_refreshRate` | int | `200` | Milliseconds between each proximity update tick. |
 
+### RedM vs FiveM key bindings
+
+On **RedM**, proximity cycle, radio PTT, and mic mute use `RegisterRawKeymap` with **fixed** keys: **F11** (cycle), **Left Alt** (radio), **M** (mic mute) — see `client/init/main.lua` and `client/mic_mute.lua`. The ConVars `voice_defaultCycle`, `voice_defaultRadio`, and `voice_defaultMicMuteKey` apply only on **FiveM (GTA V)** clients via `RegisterKeyMapping`.
+
 ---
 
 ## Radio & Call

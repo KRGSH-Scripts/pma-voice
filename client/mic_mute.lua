@@ -29,7 +29,7 @@ end
 
 RegisterCommand('togglemicmute', toggleMicMuteCommand, false)
 
-if gameVersion == 'fivem' then
+if shouldRegisterFiveMKeyMappings() then
 	RegisterKeyMapping('togglemicmute', 'Toggle Microphone Mute', 'keyboard',
 		GetConvar('voice_defaultMicMuteKey', 'M'))
 end

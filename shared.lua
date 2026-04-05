@@ -44,6 +44,14 @@ end
 Player = Player
 Entity = Entity
 
+--- GTA V client: use FiveM RegisterKeyMapping. Not RedM (uses RegisterRawKeymap); not FXServer.
+function shouldRegisterFiveMKeyMappings()
+	if IsDuplicityVersion() then
+		return false
+	end
+	return gameVersion == 'fivem' or gameVersion == 'gta5'
+end
+
 -- Proximity ranges as nominal meters (GTA units ≈ meters when not using native audio).
 -- With native audio, stored values are divided by 3; clients multiply by 3 when testing hear distance.
 local _voiceModeMeters = { 1, 3, 5, 10, 25, 50 }
