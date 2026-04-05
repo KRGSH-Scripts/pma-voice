@@ -9,7 +9,9 @@ local volumes = {
 	['click_off'] = GetConvarInt('voice_offClickVolume', 3) / 100,
 }
 
-radioEnabled, radioPressed, mode = true, false, GetConvarInt('voice_defaultVoiceMode', 2)
+local defaultVoiceMode = GetConvarInt('voice_defaultVoiceMode', 3)
+radioEnabled, radioPressed, mode = true, false,
+	math.min(math.max(defaultVoiceMode, 1), #Cfg.voiceModes)
 radioData = {}
 callData = {}
 submixIndicies = {}

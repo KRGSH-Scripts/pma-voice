@@ -34,6 +34,8 @@ AddEventHandler('mumbleConnected', function(address, isReconnecting)
 
 	handleInitialState()
 
+	applyMicMuteState()
+
 	logger.log('Finished connection logic')
 end)
 

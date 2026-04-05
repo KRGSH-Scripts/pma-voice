@@ -13,7 +13,7 @@ All ConVars are declared in `fxmanifest.lua` under `convar_category 'PMA-Voice'`
 ```
 # In server.cfg
 setr voice_useNativeAudio true
-setr voice_defaultVoiceMode 2
+setr voice_defaultVoiceMode 3
 setr voice_enableRadios 1
 ```
 
@@ -50,7 +50,9 @@ If none of these are set, the server automatically enables `voice_useNativeAudio
 | `voice_enableUi` | int | `1` | Enables the built-in HUD overlay. |
 | `voice_enableProximityCycle` | int | `1` | Allows players to cycle proximity with the configured key. `0` locks players to `voice_defaultVoiceMode`. |
 | `voice_defaultCycle` | string | `"F11"` | Key binding for proximity cycling. See [FiveM key IDs](https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/). |
-| `voice_defaultVoiceMode` | int | `2` | Starting voice mode index on join. `1` = Whisper, `2` = Normal, `3` = Shouting. |
+| `voice_defaultVoiceMode` | int | `3` | Starting voice mode index on join (`1`–`6`): `1` = 1 m, `2` = 3 m, `3` = 5 m, `4` = 10 m, `5` = 25 m, `6` = 50 m. Values outside range are clamped. |
+| `voice_enableMicMute` | int | `1` | Enables `/togglemicmute` and the mic mute key binding (`0` disables). |
+| `voice_defaultMicMuteKey` | string | `"M"` | Default key for toggling your own microphone transmit mute (FiveM keymapper). |
 | `voice_defaultRadioVolume` | int | `30` | Default radio volume (1–100). Must be an integer, not a float. New joins only. |
 | `voice_defaultCallVolume` | int | `60` | Default call volume (1–100). New joins only. |
 | `voice_refreshRate` | int | `200` | Milliseconds between each proximity update tick. |

@@ -2,12 +2,14 @@
 
 ## Overview
 
-The Mute System provides two levels of muting:
+The Mute System provides these levels of muting:
 
-1. **Server-side staff mute** — Administrators silence a player globally via the `/muteply` command. Implemented in JavaScript to leverage `clearTimeout`.
-2. **Client-side local mute** — Individual players can locally silence specific players without server involvement.
+1. **Self mic mute (transmit)** — The local player toggles their own microphone output via `/togglemicmute` or the configured key (`voice_defaultMicMuteKey`). Implemented in `client/mic_mute.lua` using `NetworkSetVoiceActive`; also blocks radio transmit while muted. State is exposed as `LocalPlayer.state.micMuted` and reapplied on `mumbleConnected`.
+2. **Server-side staff mute** — Administrators silence a player globally via the `/muteply` command. Implemented in JavaScript to leverage `clearTimeout`.
+3. **Client-side local mute** — Individual players can locally silence specific players without server involvement.
 
 **Files:**
+- `client/mic_mute.lua` — Self transmit mute (`NetworkSetVoiceActive`), key/command, state bag `micMuted`
 - `server/mute.js` — Server command handler, timeout-based unmute, state bag sync
 - `client/init/main.lua` — `mutedPlayers` table, `toggleMutePlayer`, `toggleVoice` guard
 
@@ -102,6 +104,8 @@ If a player is locally muted, all radio/call volume override logic is skipped fo
 
 | Export | Side | Description | Parameters |
 |--------|------|-------------|------------|
+| `setPlayerMicMuted(muted)` | Client | Set self transmit mute (`NetworkSetVoiceActive`) | `boolean` |
+| `isPlayerMicMuted()` | Client | Returns `true` if self mic is muted | → `boolean` |
 | `toggleMutePlayer(source)` | Client | Toggle local mute for a player | `number` |
 | `isPlayerMuted(source)` | Client | Returns `true` if locally muted | `number` → `boolean` |
 | `getMutedPlayers()` | Client | Returns the full `mutedPlayers` table | → `table` |

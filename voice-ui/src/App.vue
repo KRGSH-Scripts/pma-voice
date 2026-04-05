@@ -10,7 +10,7 @@
 				{{ voice.radioChannel }} Mhz [Radio]
 			</p>
 			<p v-if="voice.voiceModes.length" :class="{ talking: voice.talking }">
-				{{ voice.voiceModes[voice.voiceMode][1] }} [Range]
+				{{ voice.voiceModes[voice.voiceMode][1] }} [Range]<span v-if="voice.micMuted"> · Mic muted</span>
 			</p>
 		</div>
 	</body>
@@ -30,6 +30,7 @@ export default {
 			usingRadio: false,
 			callInfo: 0,
 			talking: false,
+			micMuted: false,
 		});
 
 		// stops from toggling voice at the end of talking
@@ -66,6 +67,10 @@ export default {
 
 			if (data.usingRadio !== undefined && data.usingRadio !== voice.usingRadio) {
 				voice.usingRadio = data.usingRadio;
+			}
+
+			if (data.micMuted !== undefined) {
+				voice.micMuted = data.micMuted;
 			}
 			
 			if ((data.talking !== undefined) && !voice.usingRadio) {
