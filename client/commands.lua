@@ -34,7 +34,8 @@ end)
 
 function setProximityState(proximityRange, isCustom)
 	local voiceModeData = Cfg.voiceModes[mode]
-	MumbleSetTalkerProximity(proximityRange + 0.0)
+	local txRange = micMuted and 0.0 or (proximityRange + 0.0)
+	MumbleSetTalkerProximity(txRange)
 	LocalPlayer.state:set('proximity', {
 		index = mode,
 		distance = proximityRange,
@@ -63,6 +64,32 @@ exports("clearProximityOverride", function()
 	end
 end)
 
+-- Hot pink #FF69B4 — flat ring on ground while cycling voice range (MarkerTypeHorizontalCircleSkinny).
+local RING_R, RING_G, RING_B = 255, 105, 180
+
+local function startProximityCycleRingPreview(rangeMeters)
+	local durationMs = 2000
+	local endAt = GetGameTimer() + durationMs
+	local diameter = rangeMeters * 2.0
+	CreateThread(function()
+		while GetGameTimer() < endAt do
+			local ped = PlayerPedId()
+			local c = GetEntityCoords(ped)
+			local z = c.z - 0.98
+			DrawMarker(
+				25,
+				c.x, c.y, z,
+				0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0,
+				diameter, diameter, 0.35,
+				RING_R, RING_G, RING_B, 175,
+				false, false, 2, false, nil, nil, false
+			)
+			Wait(0)
+		end
+	end)
+end
+
 RegisterCommand('cycleproximity', function()
 	-- Proximity is either disabled, or manually overwritten.
 	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
@@ -75,7 +102,9 @@ RegisterCommand('cycleproximity', function()
 		mode = 1
 	end
 
-	setProximityState(Cfg.voiceModes[mode][1], false)
+	local range = Cfg.voiceModes[mode][1]
+	setProximityState(range, false)
+	startProximityCycleRingPreview(range)
 	TriggerEvent('pma-voice:setTalkingMode', mode)
 end, false)
 if shouldRegisterFiveMKeyMappings() then

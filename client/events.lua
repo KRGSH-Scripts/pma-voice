@@ -2,7 +2,7 @@ isInitialized = false
 
 function handleInitialState()
 	local voiceModeData = Cfg.voiceModes[mode]
-	MumbleSetTalkerProximity(voiceModeData[1] + 0.0)
+	MumbleSetTalkerProximity(micMuted and 0.0 or (voiceModeData[1] + 0.0))
 	MumbleClearVoiceTarget(voiceTarget)
 	MumbleSetVoiceTarget(voiceTarget)
 	MumbleSetVoiceChannel(LocalPlayer.state.assignedChannel)
