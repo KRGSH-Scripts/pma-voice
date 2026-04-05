@@ -189,6 +189,7 @@ end
 RegisterCommand('+radiotalk', function()
 	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	if isDead() then return end
+	if micMuted then return end
 	if not isRadioEnabled() then return end
 	if not radioPressed then
 		if radioChannel > 0 then

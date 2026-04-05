@@ -31,7 +31,13 @@ function addNearbyPlayers()
 	if disableUpdates then return end
 	-- update here so we don't have to update every call of addProximityCheck
 	plyCoords = GetEntityCoords(PlayerPedId())
-	proximity = MumbleGetTalkerProximity()
+	-- Mic mute uses talker proximity 0 for transmit only; use state distance so we still hear others in range.
+	local pState = LocalPlayer.state.proximity
+	if type(pState) == 'table' and type(pState.distance) == 'number' and pState.distance > 0.0 then
+		proximity = pState.distance + 0.0
+	else
+		proximity = MumbleGetTalkerProximity()
+	end
 	currentTargets = {}
 	MumbleClearVoiceTargetChannels(voiceTarget)
 	if LocalPlayer.state.disableProximity then return end
