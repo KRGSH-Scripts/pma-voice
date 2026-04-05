@@ -66,13 +66,16 @@ end)
 
 -- Hot pink #FF69B4 — flat ring on ground while cycling voice range (MarkerTypeHorizontalCircleSkinny).
 local RING_R, RING_G, RING_B = 255, 105, 180
+local proximityRingPreviewGen = 0
 
 local function startProximityCycleRingPreview(rangeMeters)
+	proximityRingPreviewGen = proximityRingPreviewGen + 1
+	local myGen = proximityRingPreviewGen
 	local durationMs = 2000
 	local endAt = GetGameTimer() + durationMs
 	local diameter = rangeMeters * 2.0
 	CreateThread(function()
-		while GetGameTimer() < endAt do
+		while GetGameTimer() < endAt and myGen == proximityRingPreviewGen do
 			local ped = PlayerPedId()
 			local c = GetEntityCoords(ped)
 			local z = c.z - 0.98
