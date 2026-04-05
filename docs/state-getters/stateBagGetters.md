@@ -15,3 +15,4 @@ print(proximity.index) -- prints the index of the proximity as seen in Cfg.voice
 print(proximity.distance) -- prints the distance of the proximity
 print(proximity.mode) -- prints the mode name of the proximity
 ```
+

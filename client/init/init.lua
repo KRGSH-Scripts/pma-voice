@@ -46,5 +46,7 @@ AddEventHandler('onClientResourceStart', function(resource)
 		LocalPlayer.state:set("disableRadio", 0, true)
 	end
 
+	applyMicMuteState()
+
 	print('Script initialization finished.')
 end)

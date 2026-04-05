@@ -44,19 +44,14 @@ end
 Player = Player
 Entity = Entity
 
-if GetConvar('voice_useNativeAudio', 'false') == 'true' then
-	-- native audio distance seems to be larger then regular gta units
-	Cfg.voiceModes = {
-		{ 1.5, "Whisper" }, -- Whisper speech distance in gta distance units
-		{ 3.0, "Normal" },  -- Normal speech distance in gta distance units
-		{ 6.0, "Shouting" } -- Shout speech distance in gta distance units
-	}
-else
-	Cfg.voiceModes = {
-		{ 3.0,  "Whisper" }, -- Whisper speech distance in gta distance units
-		{ 7.0,  "Normal" },  -- Normal speech distance in gta distance units
-		{ 15.0, "Shouting" } -- Shout speech distance in gta distance units
-	}
+-- Proximity ranges as nominal meters (GTA units ≈ meters when not using native audio).
+-- With native audio, stored values are divided by 3; clients multiply by 3 when testing hear distance.
+local _voiceModeMeters = { 1, 3, 5, 10, 25, 50 }
+Cfg.voiceModes = {}
+for i = 1, #_voiceModeMeters do
+	local meters = _voiceModeMeters[i]
+	local dist = GetConvar('voice_useNativeAudio', 'false') == 'true' and (meters / 3.0) or (meters + 0.0)
+	Cfg.voiceModes[i] = { dist, ("%d m"):format(meters) }
 end
 
 logger = {

@@ -25,25 +25,12 @@ playerServerId = GetPlayerServerId(PlayerId())
 
 ## Voice Modes
 
-`Cfg.voiceModes` is set at startup based on whether native audio is enabled:
+`Cfg.voiceModes` is built at startup from six nominal ranges (1, 3, 5, 10, 25, 50 m). Display names are `"1 m"`, `"3 m"`, etc.
 
-```lua
-if GetConvar('voice_useNativeAudio', 'false') == 'true' then
-    Cfg.voiceModes = {
-        { 1.5, "Whisper" },
-        { 3.0, "Normal" },
-        { 6.0, "Shouting" }
-    }
-else
-    Cfg.voiceModes = {
-        { 3.0,  "Whisper" },
-        { 7.0,  "Normal" },
-        { 15.0, "Shouting" }
-    }
-end
-```
+- **Without native audio:** stored distance equals the nominal meters (GTA units ≈ meters).
+- **With native audio:** stored distance is `meters / 3` so that the client-side proximity check (`hear distance ≈ stored × 3`) matches the nominal meters.
 
-Each entry is `{ distance_in_gta_units, display_name }`. The `mode` variable (1-indexed) selects the active entry.
+Each entry is `{ distance, display_name }`. The `mode` variable (1-indexed) selects the active entry.
 
 ---
 
