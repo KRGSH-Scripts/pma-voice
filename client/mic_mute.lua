@@ -1,7 +1,9 @@
--- Transmit mute: talker proximity 0 (no NetworkSetVoiceActive — keeps Mumble receive path intact).
+-- Mic mute: NetworkSetVoiceActive stops transmit reliably (talker proximity 0 alone often does not).
+-- Hearing still uses LocalPlayer.state.proximity.distance in addNearbyPlayers, not Mumble talker proximity.
 micMuted = false
 
 function applyMicMuteState()
+	NetworkSetVoiceActive(not micMuted)
 	if micMuted then
 		MumbleSetTalkerProximity(0.0)
 	else
@@ -13,6 +15,9 @@ function applyMicMuteState()
 	sendUIMessage({
 		micMuted = micMuted
 	})
+	if MumbleIsConnected() and isInitialized then
+		addNearbyPlayers()
+	end
 end
 
 ---@param muted boolean
