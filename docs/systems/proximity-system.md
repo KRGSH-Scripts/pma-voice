@@ -54,15 +54,16 @@ Runs every `voice_refreshRate` ms (default 200ms):
 
 ## Proximity Modes (Voice Modes)
 
-Voice modes are defined in `shared.lua` under `Cfg.voiceModes`:
+Voice modes are defined in `shared.lua` under `Cfg.voiceModes` as six nominal ranges (1, 3, 5, 10, 25, 50 m). Stored `distance` matches those meters without native audio; with native audio, stored values are `meters / 3` so the client hear check (`× 3`) matches the nominal meters.
 
-| Mode    | Standard Distance | Native Audio Distance |
-|---------|------------------|-----------------------|
-| Whisper | 3.0 GTA units    | 1.5 GTA units         |
-| Normal  | 7.0 GTA units    | 3.0 GTA units         |
-| Shout   | 15.0 GTA units   | 6.0 GTA units         |
-
-Native audio distances are smaller because the engine's 3D audio applies additional attenuation.
+| Nominal | Standard (stored distance) | Native audio (stored distance) |
+|---------|-----------------------------|--------------------------------|
+| 1 m     | 1.0                         | ≈ 0.33                         |
+| 3 m     | 3.0                         | 1.0                            |
+| 5 m     | 5.0                         | ≈ 1.67                         |
+| 10 m    | 10.0                        | ≈ 3.33                         |
+| 25 m    | 25.0                        | ≈ 8.33                         |
+| 50 m    | 50.0                        | ≈ 16.67                        |
 
 ### Cycling Proximity
 

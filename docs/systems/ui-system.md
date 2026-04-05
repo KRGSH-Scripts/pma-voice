@@ -65,6 +65,7 @@ Messages are JSON objects sent from Lua via `SendNUIMessage`. The Vue component 
 | `callInfo` | number | Current call channel (0 = none) |
 | `usingRadio` | boolean | Whether the player is currently transmitting on radio |
 | `talking` | boolean | Whether the player is currently talking (proximity) |
+| `micMuted` | boolean | Self transmit mute active; UI shows “Mic muted” next to range |
 | `sound` | string | `"audio_on"` or `"audio_off"` — triggers mic click sound |
 | `volume` | number | Volume fraction for the mic click sound (0.0–1.0) |
 

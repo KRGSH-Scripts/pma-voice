@@ -42,6 +42,7 @@ plyState:set('assignedChannel', channel,                true)
 | `call` | Server (init) / Client (volume) | All | `number` | Call volume (1–100). |
 | `submix` | Server (external) | Client | `string\|nil` | Named audio submix to apply to this player. Handled by `client/init/submix.lua`. |
 | `voiceIntent` | Client | Server/All | `string` | `'speech'` or `'music'` — affects noise suppression and filtering. |
+| `micMuted` | Client | All | `boolean` | `true` when the player has toggled self transmit mute (`NetworkSetVoiceActive`). |
 | `disableRadio` | Client | All | `number` | Bitfield of radio disable reasons. `0` = enabled. See [Radio System](radio-system.md). |
 | `radioActive` | Client | All | `boolean` | `true` while the player is transmitting on radio. |
 | `muted` | Server (mute.js) | All | `boolean` | `true` when an admin has muted the player. |
@@ -119,9 +120,9 @@ The proximity state bag is how third-party resources read the player's current v
 ```lua
 -- Server
 local prox = Player(source).state.proximity
--- prox.index    = 1|2|3  (mode index)
--- prox.distance = 7.0    (GTA units)
--- prox.mode     = "Normal"
+-- prox.index    = 1..6  (mode index)
+-- prox.distance = stored Mumble talker proximity (see shared.lua / proximity docs)
+-- prox.mode     = e.g. "5 m"
 ```
 
 Updated client-side by `setProximityState` whenever the player cycles modes or an override is applied.
