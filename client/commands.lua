@@ -34,7 +34,7 @@ end)
 
 function setProximityState(proximityRange, isCustom)
 	local voiceModeData = Cfg.voiceModes[mode]
-	local txRange = micMuted and 0.0 or (proximityRange + 0.0)
+	local txRange = micMuted and (MIC_MUTE_TX_PROXIMITY + 0.0) or (proximityRange + 0.0)
 	MumbleSetTalkerProximity(txRange)
 	LocalPlayer.state:set('proximity', {
 		index = mode,
