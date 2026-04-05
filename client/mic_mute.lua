@@ -1,12 +1,37 @@
 -- Mutes your own voice transmission (proximity and radio). Uses NetworkSetVoiceActive; do not fight this from other resources.
 micMuted = false
 
+--- After re-enabling transmit, FiveM/Mumble can take several seconds to resume routing unless we re-assert channel and targets.
+local function bumpVoiceRoutingAfterUnmute()
+	if not MumbleIsConnected() or not isInitialized then return end
+	CreateThread(function()
+		local voiceModeData = Cfg.voiceModes[mode]
+		MumbleSetTalkerProximity(voiceModeData[1] + 0.0)
+		local target = MumbleGetVoiceChannelFromServerId(playerServerId)
+		if target == -1 then
+			target = LocalPlayer.state.assignedChannel
+		end
+		if type(target) == 'number' and target > 0 then
+			MumbleSetVoiceChannel(target)
+			for _ = 1, 100 do
+				if MumbleGetVoiceChannelFromServerId(playerServerId) == target then break end
+				Wait(0)
+				MumbleSetVoiceChannel(target)
+			end
+		end
+		addNearbyPlayers()
+	end)
+end
+
 function applyMicMuteState()
 	NetworkSetVoiceActive(not micMuted)
 	LocalPlayer.state:set('micMuted', micMuted, true)
 	sendUIMessage({
 		micMuted = micMuted
 	})
+	if not micMuted then
+		bumpVoiceRoutingAfterUnmute()
+	end
 end
 
 ---@param muted boolean
