@@ -54,7 +54,7 @@ end
 
 -- Proximity ranges as nominal meters (GTA units ≈ meters when not using native audio).
 -- With native audio, stored values are divided by 3; clients multiply by 3 when testing hear distance.
-local _voiceModeMeters = { 1, 3, 5, 10, 25, 50 }
+local _voiceModeMeters = { 2, 5, 7, 10, 20, 30 }
 Cfg.voiceModes = {}
 for i = 1, #_voiceModeMeters do
 	local meters = _voiceModeMeters[i]
