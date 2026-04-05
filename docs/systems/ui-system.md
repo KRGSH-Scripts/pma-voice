@@ -4,6 +4,8 @@
 
 The UI System is a Vue 3 NUI (FiveM's in-game browser overlay) that displays the player's current voice state in the bottom-right corner of the screen. It communicates with the Lua client via `SendNUIMessage` / `window.addEventListener('message')` and signals readiness via a NUI callback.
 
+**Build:** From the repository root, run `./build.sh` (requires Node/npm). It runs `npm ci` in `voice-ui/` and `npm run build`, emitting into `ui/` per `voice-ui/vue.config.js`.
+
 **Files:**
 - `voice-ui/src/App.vue` — Single-file Vue component (template + logic + styles)
 - `voice-ui/src/main.js` — Vue app entry point

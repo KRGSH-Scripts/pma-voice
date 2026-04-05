@@ -65,6 +65,8 @@ Voice modes are defined in `shared.lua` under `Cfg.voiceModes` as six nominal ra
 | 25 m    | 25.0                        | ≈ 8.33                         |
 | 50 m    | 50.0                        | ≈ 16.67                        |
 
+The stock resource does not call `removeVoiceMode` or strip modes; if you only see three ranges in-game, check for an outdated `shared.lua` deploy or another resource calling that export.
+
 ### Cycling Proximity
 
 The `cycleproximity` command (default key: `F11`) increments `mode` through the voice modes table and calls `setProximityState(distance, false)`:

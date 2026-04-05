@@ -87,6 +87,7 @@ All of the configs here are set using `setr [voice_configOption] [int]` OR `setr
 | voice_defaultCallVolume    | 60      | The default volume to set the call to (has to be between 1 and 100) *NOTE: Only new joins will have the new value, players that already joined will not.*                             | float        |
 | voice_defaultVoiceMode     | 3       | Default proximity mode index when a player joins (`1`–`6`: 1 m, 3 m, 5 m, 10 m, 25 m, 50 m). Invalid values are clamped.                                                               | int          |
 
+**Mic mute troubleshooting:** Ensure `setr voice_enableMicMute 1` in `server.cfg` (default is already on). In-game, run `/togglemicmute` in the F8 console; if the command is unknown, the client is not loading `client/mic_mute.lua` (check `fxmanifest.lua` and redeploy). If the command works but no key appears, use **Key Bindings → FiveM → Toggle Microphone Mute** (or reinstall the resource so `RegisterKeyMapping` runs).
 
 ### Call & Radio
 
