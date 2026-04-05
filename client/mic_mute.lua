@@ -1,9 +1,9 @@
--- Mic mute: NetworkSetVoiceActive stops transmit reliably (talker proximity 0 alone often does not).
--- Hearing still uses LocalPlayer.state.proximity.distance in addNearbyPlayers, not Mumble talker proximity.
+-- Transmit-only mute: never call NetworkSetVoiceActive(false) — it kills receive. Keep voice active and use
+-- MumbleSetTalkerProximity(0). addNearbyPlayers uses LocalPlayer.state.proximity.distance for who you hear.
 micMuted = false
 
 function applyMicMuteState()
-	NetworkSetVoiceActive(not micMuted)
+	NetworkSetVoiceActive(true)
 	if micMuted then
 		MumbleSetTalkerProximity(0.0)
 	else
@@ -19,6 +19,19 @@ function applyMicMuteState()
 		addNearbyPlayers()
 	end
 end
+
+-- Other scripts or the game can bump talker proximity or flip voice active; re-assert while muted.
+CreateThread(function()
+	while true do
+		Wait(200)
+		if not micMuted or not MumbleIsConnected() or not isInitialized then goto skip end
+		NetworkSetVoiceActive(true)
+		if MumbleGetTalkerProximity() > 0.01 then
+			MumbleSetTalkerProximity(0.0)
+		end
+		::skip::
+	end
+end)
 
 ---@param muted boolean
 function setPlayerMicMuted(muted)
