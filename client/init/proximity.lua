@@ -193,6 +193,27 @@ CreateThread(function()
 	end
 end)
 
+-- Detect mumble channel drift (connected but no longer on assignedChannel): others stop hearing you while you still hear them.
+CreateThread(function()
+	while true do
+		local intervalMs = GetConvarInt('voice_channelHealthInterval', 5000)
+		if intervalMs <= 0 then
+			Wait(10000)
+		else
+			Wait(intervalMs)
+			if MumbleIsConnected() and isInitialized and voiceState == "proximity" then
+				local assigned = LocalPlayer.state.assignedChannel
+				if type(assigned) == 'number' and assigned ~= 0 then
+					local current = MumbleGetVoiceChannelFromServerId(playerServerId)
+					if current ~= assigned then
+						repairAssignedVoiceChannel('health check')
+					end
+				end
+			end
+		end
+	end
+end)
+
 exports("setVoiceState", function(_voiceState, channel)
 	if _voiceState ~= "proximity" and _voiceState ~= "channel" then
 		logger.error("Didn't get a proper voice state, expected proximity or channel, got %s", _voiceState)
