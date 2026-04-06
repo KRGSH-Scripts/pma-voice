@@ -64,6 +64,7 @@ convar_category 'PMA-Voice' {
 		{ "Enable radio animation",                "$voice_enableRadioAnim",      "CV_INT",    "0" },
 		{ "Radio key",                             "$voice_defaultRadio",         "CV_STRING", "LMENU" },
 		{ "UI refresh rate",                       "$voice_uiRefreshRate",        "CV_INT",    "200" },
+		{ "Voice channel health check (ms, 0=off)", "$voice_channelHealthInterval", "CV_INT",   "5000" },
 		{ "Allow players to set audio intent",     "$voice_allowSetIntent",       "CV_INT",    "1" },
 		{ "External mumble server address",        "$voice_externalAddress",      "CV_STRING", "" },
 		{ "External mumble server port",           "$voice_externalPort",         "CV_INT",    "0" },
